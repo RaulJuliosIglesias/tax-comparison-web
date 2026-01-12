@@ -94,7 +94,7 @@ export default function SpendingChart() {
                     key: cat.key,
                     label: cat.label,
                     color: cat.color,
-                    value: country.spending[cat.key as keyof typeof country.spending],
+                    value: country.spending[cat.key as 'health' | 'education' | 'pensions'] as number,
                 }))
             )
             .enter()
@@ -118,7 +118,7 @@ export default function SpendingChart() {
             .data((country) =>
                 CATEGORIES.map((cat) => ({
                     key: cat.key,
-                    value: country.spending[cat.key as keyof typeof country.spending],
+                    value: country.spending[cat.key as 'health' | 'education' | 'pensions'] as number,
                 }))
             )
             .enter()

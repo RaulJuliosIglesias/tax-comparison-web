@@ -20,7 +20,7 @@ export default function DemographicsSection() {
     }
 
     // Find max dependency for scaling
-    const maxDependency = Math.max(...COUNTRIES.map(c => c.population.dependencyRate));
+    const maxDependency = Math.max(...COUNTRIES.map(c => c.population.dependencyRateTotal));
 
     return (
         <section className="demographics-section glass-panel">
@@ -36,7 +36,7 @@ export default function DemographicsSection() {
 
             <div className="demographics-grid">
                 {COUNTRIES.map((country) => {
-                    const dependencyPercent = (country.population.dependencyRate / maxDependency) * 100;
+                    const dependencyPercent = (country.population.dependencyRateTotal / maxDependency) * 100;
 
                     return (
                         <div key={country.id} className="demographics-card">
@@ -59,7 +59,7 @@ export default function DemographicsSection() {
                                 <div className="demographics-stat">
                                     <div className="demographics-stat-icon">📊</div>
                                     <div className="demographics-stat-content">
-                                        <span className="demographics-stat-value">{country.population.dependencyRate}%</span>
+                                        <span className="demographics-stat-value">{country.population.dependencyRateTotal}%</span>
                                         <span className="demographics-stat-label">Tasa Dependencia</span>
                                     </div>
                                 </div>
@@ -75,17 +75,22 @@ export default function DemographicsSection() {
                                         animate={{ width: `${dependencyPercent}%` }}
                                         transition={{ duration: 1, delay: 0.2, ease: 'easeOut' }}
                                         style={{
-                                            background: country.population.dependencyRate > 50
+                                            background: country.population.dependencyRateTotal > 50
                                                 ? 'linear-gradient(90deg, #ef4444, #f87171)'
                                                 : 'linear-gradient(90deg, #22c55e, #4ade80)',
                                         }}
                                     />
                                 </div>
                                 <div className="demographics-bar-insight">
-                                    {country.population.dependencyRate > 50
+                                    {country.population.dependencyRateTotal > 50
                                         ? '⚠️ Alta presión sobre el sistema'
                                         : '✅ Ratio sostenible'}
                                 </div>
+                            </div>
+
+                            {/* Source */}
+                            <div style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.4)', marginTop: '0.75rem', textAlign: 'right' }}>
+                                Fuente: {country.population.source}
                             </div>
                         </div>
                     );
@@ -95,9 +100,9 @@ export default function DemographicsSection() {
             <div className="demographics-insight-box">
                 <div className="demographics-insight-icon">💡</div>
                 <div className="demographics-insight-content">
-                    <strong>Conclusión:</strong> España tiene el mayor envejecimiento (edad media 45.6 años) y la mayor tasa de dependencia (~53%),
-                    lo que genera una presión significativa sobre el sistema de pensiones y servicios sociales.
-                    Andorra mantiene el ratio más bajo (~38%) gracias a su atractivo fiscal para profesionales activos.
+                    <strong>Conclusión:</strong> España tiene el mayor envejecimiento (edad media 45.6 años) y una tasa de dependencia total del 53.7%,
+                    lo que genera presión significativa sobre el sistema de pensiones. Estonia, con un 58.6%, tiene el ratio más alto de los tres,
+                    indicando un reto demográfico aún mayor. Andorra mantiene el ratio más bajo (~38.6%) gracias a su atractivo para profesionales activos.
                 </div>
             </div>
         </section>
