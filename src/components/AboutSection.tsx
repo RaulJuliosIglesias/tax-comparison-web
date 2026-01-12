@@ -10,7 +10,7 @@ export default function AboutSection() {
             <div className="about-header">
                 <h2 className="about-title">
                     <span>👤</span>
-                    Sobre el Proyecto y el Desarrollador
+                    Sobre el Desarrollador
                 </h2>
             </div>
 
@@ -67,28 +67,6 @@ export default function AboutSection() {
                             >
                                 <span className="social-icon">🌲</span>
                                 <span>Linktree</span>
-                            </a>
-                        )}
-                        {social.twitter && (
-                            <a
-                                href={social.twitter}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="about-social-link twitter"
-                            >
-                                <span className="social-icon">𝕏</span>
-                                <span>Twitter/X</span>
-                            </a>
-                        )}
-                        {social.youtube && (
-                            <a
-                                href={social.youtube}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="about-social-link youtube"
-                            >
-                                <span className="social-icon">▶</span>
-                                <span>YouTube</span>
                             </a>
                         )}
                     </div>
