@@ -174,6 +174,9 @@ export default function SpendingChart() {
             <p className="spending-note">
                 * España destina una proporción significativamente mayor de su PIB a pensiones debido a su estructura demográfica envejecida.
             </p>
+            <div className="source-footer" style={{ marginTop: '0.5rem', fontSize: '0.65rem', color: '#6b7280', textAlign: 'right', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '0.5rem' }}>
+                Fuente: Eurostat (COFOG) / Ministerios de Hacienda (2024)
+            </div>
         </section>
     );
 }

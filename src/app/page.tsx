@@ -1,11 +1,12 @@
 import { COUNTRIES } from '@/data/countries';
-import { formatCurrency, formatCompact } from '@/utils/formatters';
+import { formatCurrency, formatDualCurrencyFromUSD, formatNumber } from '@/utils/formatters';
 import Navigation from '@/components/Navigation';
 import TaxCalculator from '@/components/TaxCalculator';
 import SpendingChart from '@/components/SpendingChart';
 import DemographicsSection from '@/components/DemographicsSection';
 import DebtChart from '@/components/DebtChart';
 import ProjectionsSection from '@/components/ProjectionsSection';
+import LongTermProjections from '@/components/LongTermProjections';
 import SourcesSection from '@/components/SourcesSection';
 import AboutSection from '@/components/AboutSection';
 
@@ -28,7 +29,10 @@ export default function Home() {
             Explorando los modelos fiscales y socioeconómicos de tres países europeos con enfoques radicalmente diferentes.
           </p>
           <p className="hero-meta">
-            Datos oficiales: Eurostat, INE, Banco Mundial • Actualizado Enero 2024
+            Datos oficiales: Eurostat, INE, Banco Mundial, FMI • Actualizado Enero 2024
+          </p>
+          <p className="hero-meta" style={{ fontSize: '0.7rem', marginTop: '0.25rem' }}>
+            Tipo de cambio referencia: 1 EUR ≈ 1,08 USD
           </p>
         </header>
 
@@ -49,16 +53,21 @@ export default function Home() {
               </div>
 
               <div className="kpi-stats">
+                {/* GDP PPP - Dual Currency */}
                 <div className="kpi-stat">
                   <p className="kpi-stat-label">PIB Per Cápita (PPA)</p>
                   <div className="kpi-stat-value">
-                    {formatCurrency(country.gdpPerCapita.ppp, 'USD')}
+                    {formatDualCurrencyFromUSD(country.gdpPerCapita.ppp)}
                   </div>
                   <p className="kpi-stat-meta">
-                    Fuente: {country.gdpPerCapita.source}
+                    Nominal: {formatDualCurrencyFromUSD(country.gdpPerCapita.nominal)}
+                  </p>
+                  <p className="kpi-stat-source">
+                    📚 {country.gdpPerCapita.source}
                   </p>
                 </div>
 
+                {/* IRPF with Source */}
                 <div className="kpi-stat">
                   <p className="kpi-stat-label">IRPF Máximo</p>
                   <div className="kpi-stat-value negative">
@@ -67,8 +76,12 @@ export default function Home() {
                   <p className="kpi-stat-meta">
                     IVA: {country.tax.vat}% • Sociedades: {country.tax.corporateTax}%
                   </p>
+                  <p className="kpi-stat-source">
+                    📚 {country.tax.source}
+                  </p>
                 </div>
 
+                {/* Labor & Debt with Source */}
                 <div className="kpi-stat">
                   <p className="kpi-stat-label">Desempleo / Deuda</p>
                   <div className="kpi-stat-value negative">
@@ -76,6 +89,23 @@ export default function Home() {
                   </div>
                   <p className="kpi-stat-meta">
                     Tasa paro / Deuda (% PIB)
+                  </p>
+                  <p className="kpi-stat-source">
+                    📚 {country.labor.source} / {country.debt.source}
+                  </p>
+                </div>
+
+                {/* Retirement Age */}
+                <div className="kpi-stat">
+                  <p className="kpi-stat-label">Edad Jubilación</p>
+                  <div className="kpi-stat-value">
+                    {country.retirement.currentAge} → {country.retirement.futureAge2027}
+                  </div>
+                  <p className="kpi-stat-meta">
+                    Proyección 2050: {country.retirement.projectedAge2050} años
+                  </p>
+                  <p className="kpi-stat-source">
+                    📚 {country.retirement.source}
                   </p>
                 </div>
               </div>
@@ -100,7 +130,14 @@ export default function Home() {
         </div>
 
         {/* Projections 2050 */}
-        <ProjectionsSection />
+        <div id="projections">
+          <ProjectionsSection />
+        </div>
+
+        {/* Projections 2075 - NEW SECTION */}
+        <div id="projections2075">
+          <LongTermProjections />
+        </div>
 
         {/* Sources */}
         <SourcesSection />
@@ -113,6 +150,9 @@ export default function Home() {
           <p>© 2024 Comparativa Fiscal · Built with Next.js, D3.js & Framer Motion</p>
           <p style={{ marginTop: '0.5rem', fontSize: '0.75rem' }}>
             Los datos mostrados son aproximaciones basadas en fuentes oficiales y pueden no reflejar situaciones particulares.
+          </p>
+          <p style={{ marginTop: '0.25rem', fontSize: '0.65rem', color: '#6b7280' }}>
+            Conversión EUR/USD: 1,08 (referencia). Datos actualizados a Enero 2024.
           </p>
         </footer>
       </main>

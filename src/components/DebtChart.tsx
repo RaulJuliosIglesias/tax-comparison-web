@@ -123,12 +123,17 @@ export default function DebtChart() {
     }
 
     return (
-        <div className="debt-chart-container">
-            <h3 className="debt-chart-title">💳 Deuda Pública (% PIB)</h3>
+        <div className="debt-chart-container glass-panel" style={{ padding: '1.5rem' }}>
+            <h3 className="debt-chart-title" style={{ fontSize: '1.25rem', marginBottom: '1rem', fontWeight: 700 }}>
+                💳 Deuda Pública (% PIB)
+            </h3>
             <svg ref={chartRef}></svg>
-            <p className="debt-chart-note">
+            <p className="debt-chart-note" style={{ marginTop: '1rem', fontSize: '0.9rem', color: '#a1a1aa' }}>
                 España tiene la 5ª mayor deuda de la UE. Estonia mantiene una de las más bajas de Europa.
             </p>
+            <div className="source-footer" style={{ marginTop: '0.5rem', fontSize: '0.65rem', color: '#6b7280', textAlign: 'right', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '0.5rem' }}>
+                Fuente: Eurostat (2024) / FMI
+            </div>
         </div>
     );
 }

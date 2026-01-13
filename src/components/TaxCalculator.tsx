@@ -14,6 +14,19 @@ const COUNTRY_COLORS: Record<string, { primary: string; secondary: string; glow:
     EE: { primary: '#3b82f6', secondary: '#2563eb', glow: 'rgba(59, 130, 246, 0.3)' },
 };
 
+// Wealth Simulator Helper
+function calculateCompoundWealth(monthlySavings: number, years: number, rate: number = 0.05) {
+    const data = [];
+    let balance = 0;
+    for (let year = 1; year <= years; year++) {
+        for (let m = 0; m < 12; m++) {
+            balance = (balance + monthlySavings) * (1 + rate / 12);
+        }
+        data.push({ year, value: balance });
+    }
+    return data;
+}
+
 interface BreakdownBarProps {
     result: TaxResult;
     country: CountryData;
@@ -116,13 +129,83 @@ function BreakdownBar({ result, country, maxEmployerCost }: BreakdownBarProps) {
                     <span className="tax-summary-label">Total Impuestos</span>
                     <span className="tax-summary-value-negative">{formatCurrency(result.totalTax)}</span>
                 </div>
-                <div className="tax-summary-row">
-                    <span className="tax-summary-label">% Sobre Coste Empresa</span>
-                    <span className="tax-summary-value-negative">
-                        {((result.totalTax / result.employerCost) * 100).toFixed(1)}%
-                    </span>
+                <div className="tax-summary-row source-row" style={{ marginTop: '0.5rem', fontSize: '0.65rem', color: '#6b7280' }}>
+                    Fuente: {country.tax.source}
                 </div>
             </div>
+        </div>
+    );
+}
+
+// Wealth Chart Component (Inner)
+function WealthChart({ savingsMonthly, countryName }: { savingsMonthly: number, countryName: string }) {
+    const chartRef = useRef<SVGSVGElement>(null);
+    const years = 20;
+    const data = calculateCompoundWealth(savingsMonthly, years, 0.05); // 5% return
+    const conservative = calculateCompoundWealth(savingsMonthly, years, 0.02); // 2% return
+
+    useEffect(() => {
+        if (!chartRef.current) return;
+        const svg = d3.select(chartRef.current);
+        svg.selectAll('*').remove();
+
+        const width = 300;
+        const height = 150;
+        const margin = { top: 10, right: 10, bottom: 20, left: 40 };
+        const innerWidth = width - margin.left - margin.right;
+        const innerHeight = height - margin.top - margin.bottom;
+
+        const g = svg.attr('width', width).attr('height', height).append('g')
+            .attr('transform', `translate(${margin.left},${margin.top})`);
+
+        const x = d3.scaleLinear().domain([0, years]).range([0, innerWidth]);
+        const y = d3.scaleLinear().domain([0, data[data.length - 1].value]).range([innerHeight, 0]);
+
+        // Area
+        const area = d3.area<{ year: number, value: number }>()
+            .x(d => x(d.year))
+            .y0(innerHeight)
+            .y1(d => y(d.value))
+            .curve(d3.curveMonotoneX);
+
+        g.append('path')
+            .datum(data)
+            .attr('fill', 'rgba(34, 197, 94, 0.2)')
+            .attr('d', area);
+
+        // Line
+        const line = d3.line<{ year: number, value: number }>()
+            .x(d => x(d.year))
+            .y(d => y(d.value))
+            .curve(d3.curveMonotoneX);
+
+        g.append('path')
+            .datum(data)
+            .attr('stroke', '#22c55e')
+            .attr('stroke-width', 2)
+            .attr('fill', 'none')
+            .attr('d', line);
+
+        // Axis
+        g.append('g').attr('transform', `translate(0,${innerHeight})`)
+            .call(d3.axisBottom(x).ticks(5).tickSize(0).tickPadding(5))
+            .select('.domain').remove();
+
+        g.append('text')
+            .attr('x', innerWidth)
+            .attr('y', innerHeight - 5)
+            .attr('text-anchor', 'end')
+            .attr('fill', '#fff')
+            .style('font-size', '10px')
+            .text(`${formatNumber(data[data.length - 1].value)} €`);
+
+    }, [savingsMonthly]);
+
+    return (
+        <div className="wealth-chart-wrapper">
+            <h4 className="wealth-title">Proyección a 20 años (Interés Compuesto 5%)</h4>
+            <svg ref={chartRef} style={{ width: '100%', height: '150px' }}></svg>
+            <p className="wealth-note">Si inviertes el ahorro fiscal mensual en un fondo indexado.</p>
         </div>
     );
 }
@@ -130,6 +213,7 @@ function BreakdownBar({ result, country, maxEmployerCost }: BreakdownBarProps) {
 export default function TaxCalculator() {
     const [salary, setSalary] = useState(35000);
     const [isClient, setIsClient] = useState(false);
+    const [showWealth, setShowWealth] = useState(false);
 
     // Prevent hydration mismatch
     useEffect(() => {
@@ -139,10 +223,11 @@ export default function TaxCalculator() {
     const results = useMemo(() => calculateTax(salary), [salary]);
     const maxEmployerCost = Math.max(...results.map((r) => r.employerCost));
 
-    // Pre-calculate some comparison stats
+    // Pre-calculate
     const bestNet = results.reduce((a, b) => (a.netSalary > b.netSalary ? a : b));
     const worstNet = results.reduce((a, b) => (a.netSalary < b.netSalary ? a : b));
-    const netDifference = bestNet.netSalary - worstNet.netSalary;
+    const netDifferenceYearly = bestNet.netSalary - worstNet.netSalary;
+    const netDifferenceMonthly = netDifferenceYearly / 12;
 
     if (!isClient) {
         return (
@@ -153,7 +238,7 @@ export default function TaxCalculator() {
     }
 
     return (
-        <section className="tax-calculator-section">
+        <section className="tax-calculator-section glass-panel">
             <div className="tax-calculator-header">
                 <h2 className="tax-calculator-title">
                     <span className="tax-calculator-icon">💰</span>
@@ -212,20 +297,42 @@ export default function TaxCalculator() {
                 </div>
             </div>
 
-            {/* Insight Banner */}
+            {/* Insight Banner & Wealth Simulator Toggle */}
             <motion.div
-                key={`${bestNet.countryId}-${netDifference}`}
+                key={`${bestNet.countryId}-${netDifferenceYearly}`}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="tax-insight-banner"
+                className="tax-insight-wrapper"
             >
-                <span className="tax-insight-icon">💡</span>
-                <span className="tax-insight-text">
-                    Con un salario bruto de <strong>{formatCurrency(salary)}</strong>,
-                    ganarías <strong className="tax-insight-highlight">{formatCurrency(netDifference)}</strong> más al año
-                    viviendo en <strong>{COUNTRIES.find(c => c.id === bestNet.countryId)?.name}</strong> que en{' '}
-                    <strong>{COUNTRIES.find(c => c.id === worstNet.countryId)?.name}</strong>.
-                </span>
+                <div className="tax-insight-banner">
+                    <span className="tax-insight-icon">💡</span>
+                    <span className="tax-insight-text">
+                        Con {formatCurrency(salary)}, ganarías <strong className="tax-insight-highlight">{formatCurrency(netDifferenceYearly)}</strong> más al año
+                        en <strong>{COUNTRIES.find(c => c.id === bestNet.countryId)?.name}</strong>.
+                    </span>
+                    <button
+                        className="wealth-toggle-btn"
+                        onClick={() => setShowWealth(!showWealth)}
+                    >
+                        {showWealth ? 'Ocultar Proyección' : 'Ver a Futuro 🚀'}
+                    </button>
+                </div>
+
+                <AnimatePresence>
+                    {showWealth && (
+                        <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            className="wealth-simulator-container"
+                        >
+                            <WealthChart
+                                savingsMonthly={netDifferenceMonthly}
+                                countryName={COUNTRIES.find(c => c.id === bestNet.countryId)?.name || ''}
+                            />
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </motion.div>
 
             {/* Bar Charts Grid */}
@@ -246,7 +353,7 @@ export default function TaxCalculator() {
             </div>
 
             <p className="tax-disclaimer">
-                * Cálculos aproximados basados en tipos generales 2024. No incluye deducciones específicas ni situaciones familiares.
+                * Cálculos aproximados basados en tipos generales 2024. No incluye deducciones específicas. Fuente: AEAT / Govern d'Andorra / EMTA.
             </p>
         </section>
     );

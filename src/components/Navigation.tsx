@@ -10,6 +10,7 @@ const NAV_ITEMS = [
     { label: 'Gasto Público', href: '#spending', icon: '📊' },
     { label: 'Demografía', href: '#demographics', icon: '👥' },
     { label: 'Proyecciones 2050', href: '#projections', icon: '🔮' },
+    { label: 'Futuro 2075', href: '#projections2075', icon: '🚀' },
     { label: 'Fuentes', href: '#sources', icon: '📚' },
     { label: 'Sobre Mí', href: '#about', icon: '👤' },
 ];

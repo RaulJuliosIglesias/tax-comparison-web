@@ -51,6 +51,12 @@ export interface CountryData {
     retirementAge: number;
     source: string;
   };
+  projections2075: {
+    population: number;
+    populationTrend: 'Decline' | 'Stable' | 'Growth';
+    debtTrend: 'Rising' | 'Stable' | 'Decreasing';
+    source: string;
+  };
 }
 
 export const COUNTRIES: CountryData[] = [
@@ -104,6 +110,12 @@ export const COUNTRIES: CountryData[] = [
       retirementAge: 72,
       source: 'ONU / Eurostat Projections',
     },
+    projections2075: {
+      population: 37771000,
+      populationTrend: 'Decline',
+      debtTrend: 'Rising',
+      source: 'ONU World Population Prospects 2024 / Proyección Tendencial',
+    },
   },
   {
     id: 'AD',
@@ -155,6 +167,12 @@ export const COUNTRIES: CountryData[] = [
       retirementAge: 67,
       source: 'Estimaciones basadas en tendencias',
     },
+    projections2075: {
+      population: 63000,
+      populationTrend: 'Decline',
+      debtTrend: 'Rising',
+      source: 'Estimación basada en proyección ONU a 2100 (47k)',
+    },
   },
   {
     id: 'EE',
@@ -205,6 +223,12 @@ export const COUNTRIES: CountryData[] = [
       populationChange: -4.1,
       retirementAge: 71,
       source: 'Statistics Estonia / ONU',
+    },
+    projections2075: {
+      population: 1250000,
+      populationTrend: 'Decline',
+      debtTrend: 'Rising',
+      source: 'Statistics Estonia (Proyección 2085) / Eurostat',
     },
   },
 ];
