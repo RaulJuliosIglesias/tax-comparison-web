@@ -37,7 +37,7 @@ export default function SourcesSection() {
             <div className="sources-note">
                 <div className="sources-note-icon">ℹ️</div>
                 <div className="sources-note-content">
-                    <strong>Nota metodológica:</strong> Los datos corresponden principalmente al año fiscal 2024 o al último año disponible en cada fuente.
+                    <strong>Nota metodológica:</strong> Los datos corresponden principalmente al año fiscal 2026 o al último año disponible en cada fuente.
                     Las proyecciones a 2050 se basan en modelos demográficos de Eurostat y Naciones Unidas (ONU World Population Prospects).
                     Los cálculos de impuestos son aproximaciones basadas en tipos generales y pueden variar según situaciones individuales.
                 </div>

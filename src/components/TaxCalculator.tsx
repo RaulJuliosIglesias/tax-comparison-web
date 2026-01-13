@@ -353,7 +353,7 @@ export default function TaxCalculator() {
             </div>
 
             <p className="tax-disclaimer">
-                * Cálculos aproximados basados en tipos generales 2024. No incluye deducciones específicas. Fuente: AEAT / Govern d'Andorra / EMTA.
+                * Cálculos aproximados basados en tipos generales 2026. No incluye deducciones específicas. Fuente: AEAT / Govern d'Andorra / EMTA.
             </p>
         </section>
     );

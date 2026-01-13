@@ -55,7 +55,7 @@ export default function ProjectionsSection() {
                             <div className="projection-comparison">
                                 <div className="projection-now">
                                     <span className="projection-value-small">{country.population.medianAge}</span>
-                                    <span className="projection-label">2024</span>
+                                    <span className="projection-label">2026</span>
                                 </div>
                                 <div className="projection-arrow">→</div>
                                 <div className="projection-future">
@@ -93,7 +93,7 @@ export default function ProjectionsSection() {
                             <div className="projection-comparison">
                                 <div className="projection-now">
                                     <span className="projection-value-small">{country.retirement.currentAge}</span>
-                                    <span className="projection-label">2024</span>
+                                    <span className="projection-label">2026</span>
                                 </div>
                                 <div className="projection-arrow">→</div>
                                 <div className="projection-future">

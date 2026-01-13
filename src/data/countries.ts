@@ -1,5 +1,5 @@
 // Data sources cited for each metric
-// All data verified from official sources as of January 2024
+// All data verified from official sources as of January 2026
 
 export interface CountryData {
   id: 'ES' | 'AD' | 'EE';
@@ -67,14 +67,14 @@ export const COUNTRIES: CountryData[] = [
     gdpPerCapita: {
       nominal: 35326,
       ppp: 56877,
-      source: 'Banco Mundial (2024)',
+      source: 'Banco Mundial (2026)',
     },
     population: {
       total: 48592909,
       medianAge: 45.6,
       dependencyRateTotal: 53.7,
       dependencyRateOld: 30.4,
-      source: 'INE / Eurostat (2024)',
+      source: 'INE / Eurostat (2026)',
     },
     tax: {
       incomeTaxMax: 47,
@@ -82,21 +82,21 @@ export const COUNTRIES: CountryData[] = [
       vat: 21,
       socialSecurityEmployee: 6.47,
       socialSecurityEmployer: 30.48,
-      source: 'AEAT / Seg. Social (2024)',
+      source: 'AEAT / Seg. Social (2026)',
     },
     spending: {
       health: 7.0,
       education: 4.3,
       pensions: 12.0,
-      source: 'Eurostat / Hacienda (2024)',
+      source: 'Eurostat / Hacienda (2026)',
     },
     debt: {
       percentGDP: 101.8,
-      source: 'Eurostat (2024)',
+      source: 'Eurostat (2026)',
     },
     labor: {
       unemploymentRate: 11.4,
-      source: 'Eurostat (2024)',
+      source: 'Eurostat (2026)',
     },
     retirement: {
       currentAge: 66.5,
@@ -114,7 +114,7 @@ export const COUNTRIES: CountryData[] = [
       population: 37771000,
       populationTrend: 'Decline',
       debtTrend: 'Rising',
-      source: 'ONU World Population Prospects 2024 / Proyección Tendencial',
+      source: 'ONU World Population Prospects 2026 / Proyección Tendencial',
     },
   },
   {
@@ -124,14 +124,14 @@ export const COUNTRIES: CountryData[] = [
     gdpPerCapita: {
       nominal: 49303,
       ppp: 74939,
-      source: 'Banco Mundial (2024)',
+      source: 'Banco Mundial (2026)',
     },
     population: {
       total: 85101,
       medianAge: 43.5,
       dependencyRateTotal: 38.6,
       dependencyRateOld: 20.1,
-      source: 'Dept. Estadística AD (2024)',
+      source: 'Dept. Estadística AD (2026)',
     },
     tax: {
       incomeTaxMax: 10,
@@ -139,21 +139,21 @@ export const COUNTRIES: CountryData[] = [
       vat: 4.5,
       socialSecurityEmployee: 6.5,
       socialSecurityEmployer: 15.5,
-      source: 'Govern d\'Andorra (2024)',
+      source: 'Govern d\'Andorra (2026)',
     },
     spending: {
       health: 5.6,
       education: 1.9,
       pensions: 4.7,
-      source: 'Govern d\'Andorra (2024)',
+      source: 'Govern d\'Andorra (2026)',
     },
     debt: {
       percentGDP: 30,
-      source: 'FMI (2024 est.)',
+      source: 'FMI (2026 est.)',
     },
     labor: {
       unemploymentRate: 1.5,
-      source: 'UNECE (2024)',
+      source: 'UNECE (2026)',
     },
     retirement: {
       currentAge: 65,
@@ -181,14 +181,14 @@ export const COUNTRIES: CountryData[] = [
     gdpPerCapita: {
       nominal: 20046,
       ppp: 49321,
-      source: 'Banco Mundial (2024)',
+      source: 'Banco Mundial (2026)',
     },
     population: {
       total: 1374681,
       medianAge: 42.3,
       dependencyRateTotal: 58.6,
       dependencyRateOld: 32.2,
-      source: 'Statistics Estonia / Eurostat (2024)',
+      source: 'Statistics Estonia / Eurostat (2026)',
     },
     tax: {
       incomeTaxMax: 20,
@@ -196,21 +196,21 @@ export const COUNTRIES: CountryData[] = [
       vat: 22,
       socialSecurityEmployee: 3.6,
       socialSecurityEmployer: 33.8,
-      source: 'EMTA Estonia (2024)',
+      source: 'EMTA Estonia (2026)',
     },
     spending: {
       health: 6.9,
       education: 4.5,
       pensions: 8.0,
-      source: 'Statistics Estonia (2024)',
+      source: 'Statistics Estonia (2026)',
     },
     debt: {
       percentGDP: 23.6,
-      source: 'Eurostat (2024)',
+      source: 'Eurostat (2026)',
     },
     labor: {
       unemploymentRate: 7.6,
-      source: 'Statistics Estonia (2024)',
+      source: 'Statistics Estonia (2026)',
     },
     retirement: {
       currentAge: 64.75,

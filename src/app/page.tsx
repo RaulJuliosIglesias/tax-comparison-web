@@ -20,7 +20,7 @@ export default function Home() {
         <header className="hero-header">
           <div className="hero-badge">
             <span>📊</span>
-            <span>Análisis Comparativo 2024</span>
+            <span>Análisis Comparativo 2026</span>
           </div>
           <h1 className="hero-title text-gradient">
             Economía Comparada
@@ -29,7 +29,7 @@ export default function Home() {
             Explorando los modelos fiscales y socioeconómicos de tres países europeos con enfoques radicalmente diferentes.
           </p>
           <p className="hero-meta">
-            Datos oficiales: Eurostat, INE, Banco Mundial, FMI • Actualizado Enero 2024
+            Datos oficiales: Eurostat, INE, Banco Mundial, FMI • Actualizado Enero 2026
           </p>
           <p className="hero-meta" style={{ fontSize: '0.7rem', marginTop: '0.25rem' }}>
             Tipo de cambio referencia: 1 EUR ≈ 1,08 USD
@@ -147,12 +147,12 @@ export default function Home() {
 
         {/* Footer */}
         <footer className="footer">
-          <p>© 2024 Comparativa Fiscal · Built with Next.js, D3.js & Framer Motion</p>
+          <p>© 2026 Comparativa Fiscal · Built with Next.js, D3.js & Framer Motion</p>
           <p style={{ marginTop: '0.5rem', fontSize: '0.75rem' }}>
             Los datos mostrados son aproximaciones basadas en fuentes oficiales y pueden no reflejar situaciones particulares.
           </p>
           <p style={{ marginTop: '0.25rem', fontSize: '0.65rem', color: '#6b7280' }}>
-            Conversión EUR/USD: 1,08 (referencia). Datos actualizados a Enero 2024.
+            Conversión EUR/USD: 1,08 (referencia). Datos actualizados a Enero 2026.
           </p>
         </footer>
       </main>

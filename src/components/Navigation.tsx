@@ -1,7 +1,6 @@
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const NAV_ITEMS = [
@@ -17,6 +16,40 @@ const NAV_ITEMS = [
 
 export default function Navigation() {
     const [isOpen, setIsOpen] = useState(false);
+    const [activeSection, setActiveSection] = useState('#top');
+
+    // Detect active section using IntersectionObserver
+    useEffect(() => {
+        const sections = NAV_ITEMS.map(item => item.href.replace('#', ''));
+
+        const observers: IntersectionObserver[] = [];
+
+        sections.forEach(sectionId => {
+            const element = document.getElementById(sectionId);
+            if (!element) return;
+
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            setActiveSection(`#${sectionId}`);
+                        }
+                    });
+                },
+                {
+                    rootMargin: '-20% 0px -70% 0px', // Trigger when section is in upper-middle of viewport
+                    threshold: 0,
+                }
+            );
+
+            observer.observe(element);
+            observers.push(observer);
+        });
+
+        return () => {
+            observers.forEach(observer => observer.disconnect());
+        };
+    }, []);
 
     return (
         <>
@@ -31,7 +64,7 @@ export default function Navigation() {
                         <a
                             key={item.href}
                             href={item.href}
-                            className="nav-link"
+                            className={`nav-link ${activeSection === item.href ? 'active' : ''}`}
                             onClick={() => setIsOpen(false)}
                         >
                             <span className="nav-link-icon">{item.icon}</span>
@@ -72,7 +105,7 @@ export default function Navigation() {
                             <motion.a
                                 key={item.href}
                                 href={item.href}
-                                className="nav-mobile-link"
+                                className={`nav-mobile-link ${activeSection === item.href ? 'active' : ''}`}
                                 initial={{ opacity: 0, x: 20 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: index * 0.05 }}

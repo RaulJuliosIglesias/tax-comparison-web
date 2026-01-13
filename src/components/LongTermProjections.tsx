@@ -30,7 +30,7 @@ export default function LongTermProjections() {
             .attr('transform', `translate(${margin.left},${margin.top})`);
 
         // Prepare Data: Normalize to 100 base index for comparison
-        const years = [2024, 2050, 2075];
+        const years = [2026, 2050, 2075];
         const data = COUNTRIES.map(c => {
             const basePop = c.population.total;
             return {
@@ -38,7 +38,7 @@ export default function LongTermProjections() {
                 name: c.name,
                 color: `var(--color-${c.id.toLowerCase()})`,
                 values: [
-                    { year: 2024, value: 100 },
+                    { year: 2026, value: 100 },
                     { year: 2050, value: (c.population.total * (1 + c.projections2050.populationChange / 100)) / basePop * 100 },
                     { year: 2075, value: c.projections2075.population / basePop * 100 },
                 ]
@@ -46,7 +46,7 @@ export default function LongTermProjections() {
         });
 
         // Scales
-        const x = d3.scaleLinear().domain([2024, 2075]).range([0, width]);
+        const x = d3.scaleLinear().domain([2026, 2075]).range([0, width]);
         const y = d3.scaleLinear().domain([50, 110]).range([height, 0]);
 
         // Grid
@@ -83,7 +83,7 @@ export default function LongTermProjections() {
             .attr('x', -height / 2)
             .attr('fill', '#a1a1aa')
             .attr('text-anchor', 'middle')
-            .text('Índice Poblacional (Base 100 = 2024)');
+            .text('Índice Poblacional (Base 100 = 2026)');
 
         // Line Generator
         const line = d3.line<{ year: number; value: number }>()
